@@ -48,6 +48,12 @@ group :development, :test do
 
   # Lint your ERB or HTML files [https://github.com/Shopify/erb-lint]
   gem "erb_lint", "~> 0.7.0"
+
+  # RSpec Testing [https://github.com/rspec/rspec-rails]
+  gem "rspec-rails", "~> 7.0"
+
+  # Brings back `assigns` and `assert_template` to your Rails tests [https://github.com/rails/rails-controller-testing]
+  gem "rails-controller-testing", "~> 1.0"
 end
 
 group :development do
@@ -59,4 +65,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  # Simple one-liner tests for common Rails functionality [https://github.com/thoughtbot/shoulda-matchers]
+  gem "shoulda-matchers", "~> 6.4"
 end
