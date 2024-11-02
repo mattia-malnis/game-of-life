@@ -45,6 +45,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Lint your ERB or HTML files [https://github.com/Shopify/erb-lint]
+  gem "erb_lint", "~> 0.7.0"
 end
 
 group :development do
