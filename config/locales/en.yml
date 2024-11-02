@@ -28,4 +28,12 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        generation:
+          attributes:
+            matrix:
+              wrong_row_count: "should have %{expected} rows, but has %{actual}"
+              wrong_column_count: "each row should have %{expected} columns"
+              invalid_chars: "should contain only '.' or '*', found: %{invalid}"
