@@ -1,4 +1,7 @@
 require 'rails_helper'
+require 'support/models/concerns/matrix_parseable'
+require 'support/models/concerns/game_rules'
+require 'support/models/concerns/neighbor_countable'
 
 RSpec.describe Generation, type: :model do
   context "associations" do
@@ -68,6 +71,28 @@ RSpec.describe Generation, type: :model do
         subject.matrix = nil
         expect(subject).not_to be_valid
       end
+    end
+  end
+
+  context "concerns" do
+    it_behaves_like "MatrixParseable"
+    it_behaves_like "GameRules"
+    it_behaves_like "NeighborCountable"
+  end
+
+  context "new matrix generation" do
+    let(:user) { UserSession.create }
+    let(:game) { user.games.create }
+    let(:generation) { game.generations.create(counter: 1, columns: 5, rows: 3, matrix: "..*..\n.**..\n.*...") }
+
+    it "creates a new matrix" do
+      expect(generation.next_generation).to eq(".**..\n.**..\n.**..")
+    end
+
+    it "save the new matrix on database" do
+      next_generation = generation.find_or_create_next_generation
+      expect(next_generation.counter).to eq(2)
+      expect(next_generation.matrix).to eq(".**..\n.**..\n.**..")
     end
   end
 end
