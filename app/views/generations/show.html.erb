@@ -1,6 +1,11 @@
 <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
   <div class="max-w-full lg:max-w-none lg:w-2/3 text-gray-800 leading-relaxed">
-    <h1 class="text-3xl font-semibold text-emerald-800 mb-4">Generation <%= @generation.counter %></h1>
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <h1 class="text-3xl font-semibold text-emerald-800">Generation <%= @generation.counter %></h1>
+      <%= link_to game_generation_path(@game, @generation, format: :txt), download: "generation-#{@generation.counter}.txt", class: "flex items-center gap-2 bg-gray-100 text-gray-700 font-medium py-1 px-3 rounded text-sm shadow hover:bg-emerald-800 hover:text-white hover:shadow-md transition duration-200" do %>
+        <%= inline_svg_tag("download.svg", class: "size-4") %> Export
+      <% end %>
+    </div>
     <%= content_tag :div, class: "p-0.5 grid gap-1 max-w-full overflow-x-auto", style: "grid-template-columns: repeat(#{@generation.columns}, minmax(12px, 25px)); grid-auto-rows: 1fr;" do %>
       <% @generation.matrix_array.flatten.each do |status| %>
         <%= cell(status) %>

@@ -2,6 +2,10 @@ class GenerationsController < ApplicationController
   before_action :set_game
   before_action :set_generation
   def show
+    respond_to do |format|
+      format.html
+      format.text
+    end
   end
 
   def next_generation
