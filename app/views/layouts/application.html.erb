@@ -19,7 +19,11 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <header class="container mx-auto py-10 px-5 flex justify-center">
+      <%= link_to inline_svg_tag("logo.svg"), root_path %>
+    </header>
+    <main class="container mx-auto px-5 py-8">
+      <%= alert_error(flash[:alert]) %>
       <%= yield %>
     </main>
   </body>

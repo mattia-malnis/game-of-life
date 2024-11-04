@@ -1,0 +1,42 @@
+<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+  <div class="lg:w-2/3 text-gray-800 leading-relaxed">
+    <h1 class="text-3xl font-semibold text-emerald-800 mb-4">Explore Conway's Game of Life</h1>
+    <p>
+      The Game of Life, devised by British mathematician John Horton Conway, is a cellular automaton that requires no input after its initial setup. This zero-player game evolves based on its initial state, allowing you to observe complex behaviors emerging from simple rules.
+    </p>
+    <h2 class="text-2xl font-semibold mt-6 mb-3 text-emerald-800">Game rules</h2>
+    <p>
+      Each cell interacts with its eight neighbors, changing states based on simple transition rules:
+    </p>
+    <ul class="list-disc list-inside mt-3 space-y-2 text-gray-700">
+      <li>Cells with fewer than two neighbors die due to underpopulation.</li>
+      <li>Cells with two or three neighbors survive to the next generation.</li>
+      <li>Cells with more than three neighbors die due to overpopulation.</li>
+      <li>Dead cells with exactly three neighbors come to life as if by reproduction.</li>
+    </ul>
+  </div>
+
+  <div class="lg:w-1/3 bg-gradient-to-b from-emerald-700 to-emerald-900 text-white p-8 rounded-3xl shadow-lg">
+    <h2 class="text-2xl font-semibold mb-2">Start your simulation</h2>
+    <p class="mb-6">
+      Begin by uploading a seed file to initiate a new generation, or use a <a href="/sample.txt" download class="underline">sample file</a> as a guide.
+    </p>
+    <h3 class="text-xl font-semibold mb-2">Instructions</h3>
+    <ul class="list-disc list-inside mb-6">
+      <li>On the first line, specify the generation number.</li>
+      <li>On the second line, specify the grid size (rows and columns).</li>
+      <li>At the end, define the cell states, using "." for a dead cell and "*" for a live cell.</li>
+    </ul>
+    <%= form_with url: games_path, class: "mt-6 mb-2", data: { controller: "upload-dialog" } do |form| %>
+      <%= form.file_field :file, class: "hidden", accept: "text/plain", data: { action: "upload-dialog#onInputChange", upload_dialog_target: "inputField" } %>
+      <button data-action="upload-dialog#openDialog" class="block w-full px-6 py-3 text-center text-lg shadow font-semibold rounded-md bg-lime-400 text-emerald-900 hover:bg-lime-500 hover:text-black transition duration-200">
+        Upload seed
+      </button>
+      <%= form.submit class: "hidden" %>
+    <% end %>
+
+    <p class="text-center text-sm mt-2">
+      or <a href="/sample.txt" download class="underline">download a sample file</a>
+    </p>
+  </div>
+</div>
