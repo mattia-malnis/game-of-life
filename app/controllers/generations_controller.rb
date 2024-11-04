@@ -1,4 +1,5 @@
 class GenerationsController < ApplicationController
+  before_action :set_game
   before_action :set_generation
   def show
   end
@@ -10,10 +11,11 @@ class GenerationsController < ApplicationController
 
   private
 
+  def set_game
+    @game = @current_user.games.find(params[:game_id])
+  end
+
   def set_generation
-    @generation = Generation
-                  .joins(game: :user_session)
-                  .where(user_sessions: { id: @current_user.id })
-                  .find(params[:id])
+    @generation = @game.generations.find(params[:id])
   end
 end

@@ -9,4 +9,10 @@ module ApplicationHelper
       concat content_tag :p, messages.html_safe
     end
   end
+
+  def to_datetime(date)
+    return if date.blank?
+
+    date.strftime("%d/%m/%Y, %H:%M")
+  end
 end

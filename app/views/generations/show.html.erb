@@ -1,11 +1,17 @@
 <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
-  <div class="lg:w-2/3 text-gray-800 leading-relaxed">
+  <div class="max-w-full lg:max-w-none lg:w-2/3 text-gray-800 leading-relaxed">
     <h1 class="text-3xl font-semibold text-emerald-800 mb-4">Generation <%= @generation.counter %></h1>
     <%= content_tag :div, class: "p-0.5 grid gap-1 max-w-full overflow-x-auto", style: "grid-template-columns: repeat(#{@generation.columns}, minmax(12px, 25px)); grid-auto-rows: 1fr;" do %>
       <% @generation.matrix_array.flatten.each do |status| %>
         <%= cell(status) %>
       <% end %>
     <% end %>
+    <h2 class="text-2xl font-semibold text-emerald-800 mt-8">Previous generations</h2>
+    <div class="flex flex-wrap gap-3 mt-4">
+      <% @game.generations.each do |g| %>
+        <%= link_to "Gen #{g.counter}", game_generation_path(@game, g), class: "bg-gray-100 text-gray-700 font-medium py-1 px-2 rounded text-sm shadow hover:bg-gray-200 hover:shadow-md transition duration-200" %>
+      <% end %>
+    </div>
   </div>
 
   <div class="lg:w-1/3 bg-gradient-to-b from-emerald-700 to-emerald-900 text-white p-8 rounded-3xl shadow-lg">
@@ -22,7 +28,7 @@
 
     <%= link_to "Next generation", next_generation_game_generation_path(@generation.game_id, @generation), class: "block mb-2 w-full px-6 py-3 text-center text-lg shadow font-semibold rounded-md bg-lime-400 text-emerald-900 hover:bg-lime-500 hover:text-black transition duration-200" %>
     <p class="text-center text-sm mt-2">
-      or <%= link_to "start a new generation", root_path, class: "underline" %>
+      or <%= link_to "start a new simulation", root_path, class: "underline" %>
     </p>
   </div>
 </div>
