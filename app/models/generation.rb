@@ -9,7 +9,7 @@ class Generation < ApplicationRecord
   validates :columns, :rows, numericality: { only_integer: true, greater_than_or_equal_to: 2 }
   validates :matrix, presence: true, matrix: true
 
-  default_scope { order(counter: :asc) }
+  scope :ordered, -> { order(counter: :asc) }
 
   def next_generation
     new_matrix = Array.new(rows) { Array.new(columns) }
@@ -25,14 +25,15 @@ class Generation < ApplicationRecord
   end
 
   def find_or_create_next_generation
-    return self if matrix == next_generation
+    next_matrix = next_generation
+    return self if matrix == next_matrix
 
     next_counter = counter + 1
 
     Generation.find_or_create_by(game_id: game_id, counter: next_counter) do |generation|
       generation.rows = rows
       generation.columns = columns
-      generation.matrix = next_generation
+      generation.matrix = next_matrix
     end
   end
 end

@@ -6,7 +6,7 @@ module MatrixParseable
   end
 
   def matrix_array
-    matrix.split.map { |row| row.chars.compact_blank }
+    @matrix_array ||= matrix.split.map { |row| row.chars.compact_blank }
   end
 
   private

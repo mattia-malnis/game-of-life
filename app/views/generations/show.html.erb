@@ -8,7 +8,7 @@
     <% end %>
     <h2 class="text-2xl font-semibold text-emerald-800 mt-8">Previous generations</h2>
     <div class="flex flex-wrap gap-3 mt-4">
-      <% @game.generations.each do |g| %>
+      <% @game.generations.ordered.each do |g| %>
         <%= link_to "Gen #{g.counter}", game_generation_path(@game, g), class: "bg-gray-100 text-gray-700 font-medium py-1 px-2 rounded text-sm shadow hover:bg-gray-200 hover:shadow-md transition duration-200" %>
       <% end %>
     </div>

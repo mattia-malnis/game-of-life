@@ -29,7 +29,7 @@
             <tr class="border-b">
               <td class="px-5 py-3"><%= to_datetime(past.created_at) %></td>
               <td class="px-5 py-3 text-center"><%= past.generations_count %></td>
-              <td class="px-5 py-3"><%= link_to "Show >", game_generation_path(past, past.generations.last) %></td>
+              <td class="px-5 py-3"><%= link_to "Show >", game_generation_path(past, past.generations.ordered.last) %></td>
             </tr>
           <% end %>
         </tbody>
