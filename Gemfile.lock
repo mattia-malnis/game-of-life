@@ -108,6 +108,8 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
+    dockerfile-rails (1.6.23)
+      rails (>= 3.0.0)
     drb (2.2.1)
     erb_lint (0.7.0)
       activesupport
@@ -341,6 +343,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  dockerfile-rails (>= 1.6)
   erb_lint (~> 0.7.0)
   importmap-rails
   inline_svg (~> 1.10)

@@ -62,6 +62,9 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # Provides a Rails generator to produce Dockerfiles and related files [https://github.com/fly-apps/dockerfile-rails]
+  gem "dockerfile-rails", ">= 1.6"
 end
 
 group :test do
