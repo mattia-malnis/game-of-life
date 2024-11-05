@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="min-h-full">
   <head>
     <title><%= content_for(:title) || "Game Of Life" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -19,7 +19,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="min-h-full bg-gradient-to-b from-white to-gray-100">
     <header class="container mx-auto py-10 px-5 flex justify-center">
       <%= link_to inline_svg_tag("logo.svg"), root_path %>
     </header>
