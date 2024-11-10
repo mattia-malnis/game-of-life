@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_04_110157) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_10_095547) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -23,15 +23,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_110157) do
   end
 
   create_table "generations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "counter"
-    t.integer "columns"
-    t.integer "rows"
-    t.text "matrix"
+    t.integer "counter", null: false
+    t.integer "columns", null: false
+    t.integer "rows", null: false
+    t.text "matrix", null: false
     t.uuid "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id", "counter"], name: "index_generations_on_game_id_and_counter"
     t.index ["game_id"], name: "index_generations_on_game_id"
+    t.check_constraint "columns > 1", name: "generations_columns_check"
+    t.check_constraint "counter > 0", name: "generations_counter_check"
+    t.check_constraint "rows > 1", name: "generations_rows_check"
   end
 
   create_table "user_sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
