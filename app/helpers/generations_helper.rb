@@ -6,6 +6,6 @@ module GenerationsHelper
   end
 
   def alive?(status)
-    status == Generation::ALIVE
+    status == MatrixGenerator::ALIVE
   end
 end

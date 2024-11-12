@@ -1,7 +1,4 @@
 require 'rails_helper'
-require 'support/models/concerns/matrix_parseable'
-require 'support/models/concerns/game_rules'
-require 'support/models/concerns/neighbor_countable'
 
 RSpec.describe Generation, type: :model do
   context "associations" do
@@ -72,12 +69,6 @@ RSpec.describe Generation, type: :model do
         expect(subject).not_to be_valid
       end
     end
-  end
-
-  context "concerns" do
-    it_behaves_like "MatrixParseable"
-    it_behaves_like "GameRules"
-    it_behaves_like "NeighborCountable"
   end
 
   context "new matrix generation" do

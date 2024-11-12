@@ -1,27 +1,17 @@
 class Generation < ApplicationRecord
-  include MatrixParseable
-  include GameRules
-  include NeighborCountable
-
   belongs_to :game
 
   validates :counter, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :columns, :rows, numericality: { only_integer: true, greater_than_or_equal_to: 2 }
   validates :matrix, presence: true, matrix: true
 
+  before_validation :normalize_fields
+
   scope :ordered, -> { order(counter: :asc) }
 
   def next_generation
-    new_matrix = Array.new(rows) { Array.new(columns) }
-
-    rows.times do |y|
-      columns.times do |x|
-        alive_neighbors = count_alive_neighbors(x, y)
-        new_matrix[y][x] = calculate_next_state(alive?(x, y), alive_neighbors)
-      end
-    end
-
-    new_matrix.map(&:join).join("\n")
+    generator = MatrixGenerator.new(matrix_array, rows, columns)
+    generator.generate
   end
 
   def find_or_create_next_generation
@@ -35,5 +25,15 @@ class Generation < ApplicationRecord
       generation.columns = columns
       generation.matrix = next_matrix
     end
+  end
+
+  def matrix_array
+    matrix.split.map { |row| row.chars.compact_blank }
+  end
+
+  private
+
+  def normalize_fields
+    self.matrix = matrix.try(:strip)
   end
 end
