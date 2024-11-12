@@ -10,44 +10,29 @@ class GamesController < ApplicationController
   end
 
   def create
-    if file_upload?
-      handle_file_upload
+    game = @current_user.games.new(game_params)
+    if game.save
+      redirect_to game_generation_path(game, game.generations.first)
     else
-      game = @current_user.games.new(game_params)
-      handle_game_creation(game)
+      handle_failed_save(game, "tab-2", "input_form")
     end
   end
 
-  private
-
-  def handle_file_upload
+  def upload
     unless valid_file_type?
       redirect_to root_path, alert: "Only .txt files are allowed"
       return
     end
 
     game = @current_user.games.new(attributes_from_file)
-    handle_game_creation(game)
-  end
-
-  def handle_game_creation(game)
     if game.save
       redirect_to game_generation_path(game, game.generations.first)
     else
-      respond_to do |format|
-        if file_upload?
-          format.turbo_stream { render turbo_stream: turbo_stream.replace("tab-1", partial: "upload_form", locals: { game: }) }
-        else
-          format.turbo_stream { render turbo_stream: turbo_stream.replace("tab-2", partial: "input_form", locals: { game:, from_view: false }) }
-        end
-        format.html { redirect_to root_path, alert: game.errors.full_messages }
-      end
+      handle_failed_save(game, "tab-1", "upload_form")
     end
   end
 
-  def file_upload?
-    params[:file].present?
-  end
+  private
 
   def valid_file_type?
     params[:file].content_type == "text/plain"
@@ -67,5 +52,12 @@ class GamesController < ApplicationController
 
   def game_params
     params.require(:game).permit(generations_attributes: [:counter, :columns, :rows, :matrix])
+  end
+
+  def handle_failed_save(game, tab, partial)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace(tab, partial: partial, locals: { game:, from_view: false }) }
+      format.html { redirect_to root_path, alert: game.errors.full_messages }
+    end
   end
 end

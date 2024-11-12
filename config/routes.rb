@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   root "games#index"
 
   resources :games, only: [:create] do
+    collection do
+      post :upload
+    end
     resources :generations, only: [:show] do
       member do
         get :next_generation
