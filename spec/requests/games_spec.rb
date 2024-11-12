@@ -16,7 +16,7 @@ RSpec.describe "Games", type: :request do
         let(:invalid_file) { fixture_file_upload("random_image.jpg", "image/jpeg") }
 
         it "redirects to the root path with an alert for a non-text file" do
-          post games_path, params: { file: invalid_file }
+          post upload_games_path, params: { file: invalid_file }
           expect(response).to redirect_to(root_path)
           expect(flash[:alert]).to eq("Only .txt files are allowed")
         end
@@ -28,12 +28,12 @@ RSpec.describe "Games", type: :request do
 
           it "initializes MatrixFileReader with the file content" do
             expect(MatrixFileReader).to receive(:new).with(valid_matrix.read).and_call_original
-            post games_path, params: { file: valid_matrix }
+            post upload_games_path, params: { file: valid_matrix }
           end
 
           it "creates a new game" do
             expect {
-              post games_path, params: { file: valid_matrix }
+              post upload_games_path, params: { file: valid_matrix }
             }.to change(Game, :count).by(1)
           end
         end
@@ -42,12 +42,12 @@ RSpec.describe "Games", type: :request do
           let(:invalid_matrix) { fixture_file_upload("invalid_matrix.txt", "text/plain") }
 
           it "renders upload form with turbo stream" do
-            post games_path, params: { file: invalid_matrix }, as: :turbo_stream
+            post upload_games_path, params: { file: invalid_matrix }, as: :turbo_stream
             expect(response).to have_rendered(partial: "_upload_form")
           end
 
           it "renders upload form with turbo stream" do
-            post games_path, params: { file: invalid_matrix }
+            post upload_games_path, params: { file: invalid_matrix }
             expect(response).to redirect_to(root_path)
           end
         end

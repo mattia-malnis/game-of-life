@@ -9,12 +9,12 @@
     <li>At the end, define the cell states, using "." for a dead cell and "*" for a live cell.</li>
   </ul>
   <%= form_with url: upload_games_path, class: "mt-6 mb-2", data: { controller: "upload-dialog" } do |form| %>
-    <%= alert_error(game.errors.full_messages) %>
-    <%= form.file_field :file, class: "hidden", accept: "text/plain", data: { action: "upload-dialog#onInputChange", upload_dialog_target: "inputField" } %>
-    <button data-action="upload-dialog#openDialog" class="block w-full px-6 py-3 text-center text-lg shadow font-semibold rounded-md bg-lime-400 text-emerald-900 hover:bg-lime-500 hover:text-black transition duration-200">
-      Upload seed
-    </button>
-    <%= form.submit class: "hidden" %>
+  <%= alert_error(game.errors.full_messages) %>
+  <%= form.file_field :file, class: "hidden",  data: { action: "upload-dialog#onInputChange", upload_dialog_target: "inputField" } %>
+  <button data-action="upload-dialog#openDialog" class="block w-full px-6 py-3 text-center text-lg shadow font-semibold rounded-md bg-lime-400 text-emerald-900 hover:bg-lime-500 hover:text-black transition duration-200">
+    Upload seed
+  </button>
+  <%= form.submit class: "hidden" %>
   <% end %>
 
   <p class="text-center text-sm mt-2">
