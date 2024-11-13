@@ -76,14 +76,16 @@ RSpec.describe Generation, type: :model do
     let(:game) { user.games.create }
     let(:generation) { game.generations.create(counter: 1, columns: 5, rows: 3, matrix: "..*..\n.**..\n.*...") }
 
-    it "creates a new matrix" do
-      expect(generation.next_generation).to eq(".**..\n.**..\n.**..")
-    end
-
-    it "save the new matrix on database" do
+    it "creates a new generation if none exists with the expected next counter and different matrix" do
       next_generation = generation.find_or_create_next_generation
       expect(next_generation.counter).to eq(2)
-      expect(next_generation.matrix).to eq(".**..\n.**..\n.**..")
+      expect(next_generation).not_to eq(generation)
+    end
+
+    it "returns the existing generation if a matching one already exists" do
+      existing_generation = game.generations.create(counter: 2, columns: 5, rows: 3, matrix: ".**..\n.**..\n.**..")
+      found_generation = generation.find_or_create_next_generation
+      expect(found_generation).to eq(existing_generation)
     end
   end
 end

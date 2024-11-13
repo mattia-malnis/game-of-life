@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_12_171134) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_13_081631) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -30,7 +30,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_12_171134) do
     t.uuid "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "matrix_hash", null: false
     t.index ["game_id", "counter"], name: "index_generations_on_game_id_and_counter"
+    t.index ["game_id", "matrix_hash"], name: "index_generations_on_game_id_and_matrix_hash"
     t.index ["game_id"], name: "index_generations_on_game_id"
     t.check_constraint "columns > 1", name: "generations_columns_check"
     t.check_constraint "counter > 0", name: "generations_counter_check"
